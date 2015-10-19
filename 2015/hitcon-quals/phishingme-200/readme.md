@@ -1,5 +1,5 @@
-Infomation: 
 Title: PhishingMe
+
 Description
 Sent me a .doc, I will open it if your subject is "HITCON 2015"! Find the flag under my file system. p.s. I've enabled Macro for you. ^_________________^ phishing.me.hitcon.2015@gmail.com.
 Hint
@@ -110,8 +110,11 @@ From TCPDUMP we received
 --- More ICMP Traffic ---
 11:29:44.321431 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2258, length 125
 11:29:44.321527 IP my.ip.add.ress > 54.92.10.249: ICMP echo reply, id 1, seq 2258, length 125
+
 By taking all the length, we got the string as 
+
 hitcon{m4cr0_ma1ware_1s_m4k1ng_a_c0meb4ck!!}
+
 Done !!! 
 
 Special Thanks to k9
