@@ -3,13 +3,16 @@ Title: PhishingMe
 Description:
 
 Sent me a .doc, I will open it if your subject is "HITCON 2015"! Find the flag under my file system. p.s. I've enabled Macro for you. ^_________________^ phishing.me.hitcon.2015@gmail.com.
+
 Hint
-This challenge is all about macro. Requirement will be
+
+
+From the information, we know this challenge is all about macro. Requirement will be,
 
 - MS Windows
 - Ms Word with Macro
 - Email title with HITCON 2015
-- Email Address to phishing.me.hitcon.2015@gmail.com
+- - Email Address to phishing.me.hitcon.2015@gmail.com
 
  Once all this condition is fulfilled. We received an confirmation email from HITCON
 I've read your doc. Interesting
