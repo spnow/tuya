@@ -25,7 +25,7 @@ TCPDUMP from home with ICMP on. Bingo, we go packets We went and wrote few more 
 
 Concluded only ICMP able to to go out from the box. So, we did another test. 
 
-Shell ("ping -n 1 -l 2 my.ip.add.ress")
+> Shell ("ping -n 1 -l 2 my.ip.add.ress")
 
 And we received 
 
