@@ -132,4 +132,4 @@ By taking all the length, we got the string as
 
 Done !!! 
 
-Special Thanks to k9 from CLGT
+Special thanks to k9 from CLGT
