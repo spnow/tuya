@@ -1,4 +1,3 @@
-Team Name: CLGT
 Title: PhishingMe
 
 Description:
@@ -133,4 +132,4 @@ By taking all the length, we got the string as
 
 Done !!! 
 
-Special Thanks to k9
+Special Thanks to k9 from CLGT
