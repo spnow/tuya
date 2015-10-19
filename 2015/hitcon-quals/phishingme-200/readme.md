@@ -105,7 +105,9 @@ Close #1
 
 
 End Sub
+
 From TCPDUMP we received 
+
 11:29:41.058538 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2215, length 104 
 11:29:41.058617 IP my.ip.add.ress > 54.92.10.249: ICMP echo reply, id 1, seq 2215, length 104 11:29:41.128465 IP 54.92.10.249 > my.ip.add.ress: ICMP echo request, id 1, seq 2216, length 105 
 11:29:41.128542 IP my.ip.add.ress > 54.92.10.249: ICMP echo reply, id 1, seq 2216, length 105 
