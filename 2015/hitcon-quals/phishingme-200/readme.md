@@ -12,7 +12,7 @@ From the information, we know this challenge is all about macro. Requirement wil
 - MS Windows
 - Ms Word with Macro
 - Email title with HITCON 2015
-- - Email Address to phishing.me.hitcon.2015@gmail.com
+- Email Address to phishing.me.hitcon.2015@gmail.com
 
  Once all this condition is fulfilled. We received an confirmation email from HITCON
 I've read your doc. Interesting
