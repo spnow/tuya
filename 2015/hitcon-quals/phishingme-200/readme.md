@@ -14,7 +14,7 @@ From the information, we know this challenge is all about macro. Requirement wil
 - Email title with HITCON 2015
 - Email Address to phishing.me.hitcon.2015@gmail.com
 
- Once all this condition is fulfilled. We received an confirmation email from HITCON
+Once all this condition is fulfilled. We received an confirmation email from HITCON
 I've read your doc. Interesting
 First guess was, ping to home 
 Shell ("ping -n 1 my.ip.add.ress")
