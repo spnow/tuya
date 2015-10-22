@@ -1,6 +1,7 @@
 Team: CLGT
 
 Title: Dr. Bob
+Also name as Dump After Dump by xwings
 
 Description as below
 
@@ -41,13 +42,13 @@ Quick check on fstab, this is what we can see.
 
 > /home = crypto_LUKS
 
-Running on ext4 and LLVM. Looks like we need decrypt crypto_LUKS.
+Additional Information: Running on ext4 and LLVM. Looks like we need decrypt crypto_LUKS.
 
 Google says, VirtulBox RAMDUMP works this way
 
 > $ VBoxManage debugvm SafeClone dumpvmcore --filename=getthekey
 
-Usal trick getting key from ram dump
+Usal trick getting key from RAMDUMP
 
 ```
 $ aeskeyfind -v getthekey
