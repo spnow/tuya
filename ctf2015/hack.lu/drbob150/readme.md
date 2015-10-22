@@ -24,9 +24,13 @@ The only funny is, there is a snapshot. Boot up with the snapshot, usual Linux l
 Hackers to do list,
 
 > i. Reboot
+
 > ii. Grub
+
 > iii. Look for recovery, do a rw with init=/bin/bash
+
 > iv. Reboot
+
 > v. Login with root
 
 We got root. Next thing is, cat /home/bob/flag.txt. Ok, expected nothing there.
@@ -34,6 +38,7 @@ We got root. Next thing is, cat /home/bob/flag.txt. Ok, expected nothing there.
 Quick check on fstab, this is what we can see.
 
 > / = no encryption
+
 > /home = crypto_LUKS
 
 Running on ext4 and LLVM. Looks like we need decrypt crypto_LUKS.
