@@ -88,16 +88,20 @@ Login to to the VM using root, change IP. Enable openssh
 
 Next, ssh into root, run this
 
-> root@bobby:~# echo "1fab015c1e3df9eac8728f65d3d16646" | xxd -r -p > mkf.key
-> root@bobby:~# cryptsetup luksAddKey --master-key-file mkf.key /dev/vg/home
+```
+root@bobby:~# echo "1fab015c1e3df9eac8728f65d3d16646" | xxd -r -p > mkf.key
+root@bobby:~# cryptsetup luksAddKey --master-key-file mkf.key /dev/vg/home
+```
 
 Enter your passphrase. Reboot VirtualBox
 During boot, enter passphrase. Login, we got the /home folder
 
 By now, we should able to "cd /home" the flag will be there.
 
-> root@bobby:~# cat /home/bob/flag.txt
-> You are very close :)
+```
+root@bobby:~# cat /home/bob/flag.txt
+You are very close :)
+```
 
 The only possibality is original flag is being deleted.
 
