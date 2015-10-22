@@ -92,10 +92,10 @@ root@bobby:~# echo "1fab015c1e3df9eac8728f65d3d16646" | xxd -r -p > mkf.key
 root@bobby:~# cryptsetup luksAddKey --master-key-file mkf.key /dev/vg/home
 ```
 
-Enter your passphrase. Reboot VirtualBox
-During boot, enter passphrase. Login, we got the /home folder
+After enter your passphrase, issue a reboot.
+During boot up, it will ask for passphrase, enter you passphrase.
 
-By now, we should able to "cd /home" the flag will be there.
+Login and we got the /home folder. Now, "cd /home" and the flag will be there.
 
 ```
 root@bobby:~# cat /home/bob/flag.txt
