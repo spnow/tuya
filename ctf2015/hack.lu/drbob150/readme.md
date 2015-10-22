@@ -1,7 +1,6 @@
 Team: CLGT
 
-Title: Dr. Bob
-Also name as Dump After Dump by xwings
+Title: Dr. Bob also name as Dump after Dump by xwings
 
 Description as below
 
@@ -108,7 +107,7 @@ The only possibality is original flag is being deleted.
 
 We should able to see something, according to hack.lu ctf's flag format flag{theflag}
 
-> root@bobby:~# strings paritiondump | grep flag\{
+> root@bobby:~# strings paritiondump | grep flag\\{
 
 The output is the flag !
 > flag{v0t3_f0r_p3dr0}
