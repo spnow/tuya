@@ -22,7 +22,7 @@ By looking at the original md5, this is how it should go.
 
 > md5(md5($str) . "SALT")
 
-Quick and dirty ruby code.
+Quick and dirty ruby script.
 
 ```
 !#/use/bin/ruby
