@@ -6,7 +6,7 @@ Description:
 > EDIT:
 > ASLR is enabled on remote server.
 
-This is some of my personal note.
+This is some of my personal note. Finally i am back to Linux Exploit
 
 Check Security
 ```
