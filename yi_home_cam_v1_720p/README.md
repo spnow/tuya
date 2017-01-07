@@ -214,7 +214,7 @@ Kernel panic - not syncing: No init found.  Try passing init= option to kernel. 
 
 ## Part II: Taking over the flash ROM
 
-
+![alt text](https://raw.githubusercontent.com/xwings/tuya/master/yi_home_cam_v1_720p/bpxy00.jpeg)
 
 
 ## Taking Partition Notes
