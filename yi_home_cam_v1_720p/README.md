@@ -233,7 +233,6 @@ Partition by size, take from the boot log
 0x000000ff0000-0x000001000000 : "ver"
 ```
 
-
 ## Dump using bus pirate
 ```
 flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -c GD25Q128C -r yicam_night_GD25Q128C.bin -V -f
@@ -273,8 +272,12 @@ ruby -e 'print "\xFF" * 393216' >> rootfs_e.jjfs
 ```
 
 ## Burn the ROM again
-Writing in into the ROM is not a easy task, you will need a complete erase before writing into the ROM. A python script from @klks_84 come to the rescue. Looks for GD25Q128.py in this repo.
+Writing in into the ROM is not a easy task, you will need a complete erase before writing into the ROM. A python script from @klks_84 came to the rescue. Looks for GD25Q128.py in this repo.
 
 ## Notes
-We did desolder the the GD25Q128 flash rom from the box and trying to mess around with it. After solding the GD25Q128 and it does seems to be able to wake up again. Not sure if we need to continue hacking this small cam or I should start looking at their V1 1080p version.
+We desolder the the GD25Q128 flash rom from the chip and try to mess around with it. After solding the GD25Q128 back onto the board and it seems not to be able to wake up again. 
+
+At this stage Not sure if we (xwings and klks) are not too sure if we still need to continue hacking this cam or start looking at their V1 1080p version (cart and paid).
+
+## The End for Now
 
