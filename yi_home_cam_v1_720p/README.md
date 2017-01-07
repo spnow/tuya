@@ -215,7 +215,7 @@ Kernel panic - not syncing: No init found.  Try passing init= option to kernel. 
 
 
 
-## Part II, Taking over the flash room
+## Part II: Taking over the flash ROM
 
 
 
