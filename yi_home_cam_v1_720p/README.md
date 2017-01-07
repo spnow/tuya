@@ -215,11 +215,13 @@ Kernel panic - not syncing: No init found.  Try passing init= option to kernel. 
 ## Part II: Taking over the flash ROM
 
 ![alt text](https://raw.githubusercontent.com/xwings/tuya/master/yi_home_cam_v1_720p/bpxy00.jpeg)
+![alt text](https://raw.githubusercontent.com/xwings/tuya/master/yi_home_cam_v1_720p/bpxy01.jpeg)
+![alt text](https://raw.githubusercontent.com/xwings/tuya/master/yi_home_cam_v1_720p/bpxy02.jpeg)
 
 
 ## Taking Partition Notes
 
-Partition by size
+Partition by size, take from the boot log
 ```
 0x000000000000-0x000000040000 : "boot"
 0x000000040000-0x000000050000 : "env"
@@ -237,7 +239,7 @@ Partition by size
 flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -c GD25Q128C -r yicam_night_GD25Q128C.bin -V -f
 ```
 
-
+## Spliting the image
 This is how you split the file according to partition size
 ```
 dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_bootloader.bin bs=1 count=$((0x040000))
@@ -250,15 +252,15 @@ dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_vd1.bin bs=1 
 dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_ver.bin bs=1 count=$((0x1000000-0xff0000)) skip=$((0xff0000))
 ```
 
+## Mount, Edit and Pad 
 
-
-```
-
-Just In case you need padding before write
+Look for JFFS mounting tutorial, make all the changes you need
+Just In case you need padding before mergeing the ROM
 ```
 ruby -e 'print "\xFF" * 393216' >> rootfs_e.jjfs
 ```
-Merging into JJFS
+
+## Merging the ROM
 ```
 (dd if=yicam_night_test_GD25Q128C_bootloader.bin ) > yicam_full_e.bin
 (dd if=yicam_night_test_GD25Q128C_env.bin ) >> yicam_full_e.bin
@@ -270,4 +272,5 @@ Merging into JJFS
 (dd if=yicam_night_test_GD25Q128C_ver.bin ) >> yicam_full_e.bin
 ```
 
-
+## Burn the ROM again
+Writing in into the ROM is not a easy task, you will need a complete erase before writing into the ROM. A python script from @klks_84 come to the rescue. File hidding in this folder.
