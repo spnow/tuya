@@ -1,54 +1,18 @@
-# Road To Hacking XiaoMi
+# Road To Hacking Yi Cam Home 720P - Night Vision
+
+## Item Needed
 
 
-flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -c GD25Q128B -r yicam_night_GD25Q128B.bin -V -f
-flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -c GD25Q128C -r yicam_night_GD25Q128C.bin -V -f
-
-mkfs.jffs2 --little-endian --eraseblock=0x20000 -n --pad -d . -o ../rootfs_e.jjf
-ruby -e 'print "\x00" * 393216' >> rootfs_e.jjfs
-
-(dd if=yicam_night_test_GD25Q128C_bootloader.bin ) > yicam_full_e.bin
-(dd if=yicam_night_test_GD25Q128C_env.bin ) >> yicam_full_e.bin
-(dd if=yicam_night_test_GD25Q128C_conf.bin ) >> yicam_full_e.bin
-(dd if=yicam_night_test_GD25Q128C_os.bin ) >> yicam_full_e.bin
-(dd if=yicam_night_test_GD25Q128C_rootfs_e.bin ) >> yicam_full_e.bin
-(dd if=yicam_night_test_GD25Q128C_home.bin ) >> yicam_full_e.bin
-(dd if=yicam_night_test_GD25Q128C_vd1.bin ) >> yicam_full_e.bin
-(dd if=yicam_night_test_GD25Q128C_ver.bin ) >> yicam_full_e.bin
-
-0x000000000000-0x000000040000 : "boot"
-0x000000040000-0x000000050000 : "env"
-0x000000050000-0x000000060000 : "conf"
-0x000000060000-0x0000001f0000 : "os"
-0x0000001f0000-0x000000330000 : "rootfs"
-0x000000330000-0x000000fe0000 : "home"
-0x000000fe0000-0x000000ff0000 : "vd1"
-0x000000ff0000-0x000001000000 : "ver"
-
-dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_bootloader.bin bs=1 count=$((0x040000))
-dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_env.bin bs=1 count=$((0x050000-0x040000)) skip=$((0x040000))
-dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_conf.bin bs=1 count=$((0x060000-0x050000)) skip=$((0x050000))
-dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_os.bin bs=1 count=$((0x1f0000-0x060000)) skip=$((0x060000))
-dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_rootfs.bin bs=1 count=$((0x330000-0x1f0000)) skip=$((0x1f0000))
-dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_home.bin bs=1 count=$((0xfe0000-0x330000)) skip=$((0x330000))
-dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_vd1.bin bs=1 count=$((0xff0000-0xfe0000)) skip=$((0xfe0000))
-dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_ver.bin bs=1 count=$((0x1000000-0xff0000)) skip=$((0xff0000))
-
-1.8.6.1B - busybox
-
-/etc/init.d # cat S88telnet
-
-#!/bin/sh
-/home/app/telnetd &
-(sleep 10; /home/base/tools/wpa_supplicant -iwlan0 -c/home/conf/wpa_supplicant.conf) &
-(sleep 20; /sbin/ifconfig wlan0 10.10.10.54 netmask 255.255.255.0) &
 
 
-/etc/init.d # cat S89ftp
-#!/bin/sh
-/home/app/tcpsvd -vE 0.0.0.0 21 ftpd -w / &
 
-/etc/init.d # cat /home/conf/wpa_supplicant.conf
+
+
+
+### Wi-Fi settings
+
+> /etc/init.d # cat /home/conf/wpa_supplicant.conf
+```
 ctrl_interface=/var/run/wpa_supplicant
 ap_scan=1
 network={
@@ -60,21 +24,37 @@ pairwise=CCMP TKIP
 group=CCMP TKIP
 psk="my_PASSWORD_l4h"
 }
+```
 
 
-dmesg
+> /etc/init.d # cat S88telnet
+```
+#!/bin/sh
+/home/app/telnetd &
+(sleep 10; /home/base/tools/wpa_supplicant -iwlan0 -c/home/conf/wpa_supplicant.conf) &
+(sleep 20; /sbin/ifconfig wlan0 192.168.0.100 netmask 255.255.255.0) &
+```
+
+> /etc/init.d # cat S89ftp
+```
+#!/bin/sh
+/home/app/tcpsvd -vE 0.0.0.0 21 ftpd -w / &
+```
 
 
 
+After some RE (with IDA Pro), 
+
+```
 ln -s /tmp/hd1 /home/hd1
 ln -s /tmp/hd2 /home/hd2
 ln -s /tmp mmap_tmpfs
 mkdir jrview
 ln -s busybox renice
+```
 
 
-Finally .....
-
+```
 ## Booting kernel from Legacy Image at 81000000 ...
    Image Name:   7518-hi3518c-kernel
    Image Type:   ARM Linux Kernel Image (uncompressed)
@@ -185,3 +165,55 @@ Registering the dns_resolver key type
 VFS: Mounted root (jffs2 filesystem) on device 31:4.
 Freeing init memory: 112K
 Kernel panic - not syncing: No init found.  Try passing init= option to kernel. See Linux Documentation/init.txt for guidance.
+```
+
+
+
+Partition by size
+```
+0x000000000000-0x000000040000 : "boot"
+0x000000040000-0x000000050000 : "env"
+0x000000050000-0x000000060000 : "conf"
+0x000000060000-0x0000001f0000 : "os"
+0x0000001f0000-0x000000330000 : "rootfs"
+0x000000330000-0x000000fe0000 : "home"
+0x000000fe0000-0x000000ff0000 : "vd1"
+0x000000ff0000-0x000001000000 : "ver"
+```
+
+This is how you split the file according to partition size
+```
+dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_bootloader.bin bs=1 count=$((0x040000))
+dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_env.bin bs=1 count=$((0x050000-0x040000)) skip=$((0x040000))
+dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_conf.bin bs=1 count=$((0x060000-0x050000)) skip=$((0x050000))
+dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_os.bin bs=1 count=$((0x1f0000-0x060000)) skip=$((0x060000))
+dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_rootfs.bin bs=1 count=$((0x330000-0x1f0000)) skip=$((0x1f0000))
+dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_home.bin bs=1 count=$((0xfe0000-0x330000)) skip=$((0x330000))
+dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_vd1.bin bs=1 count=$((0xff0000-0xfe0000)) skip=$((0xfe0000))
+dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_ver.bin bs=1 count=$((0x1000000-0xff0000)) skip=$((0xff0000))
+```
+
+
+Dump using bus pirate
+```
+flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -c GD25Q128B -r yicam_night_GD25Q128B.bin -V -f
+flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -c GD25Q128C -r yicam_night_GD25Q128C.bin -V -f
+```
+
+Just In case you need padding before write
+```
+ruby -e 'print "\xFF" * 393216' >> rootfs_e.jjfs
+```
+Merging into JJFS
+```
+(dd if=yicam_night_test_GD25Q128C_bootloader.bin ) > yicam_full_e.bin
+(dd if=yicam_night_test_GD25Q128C_env.bin ) >> yicam_full_e.bin
+(dd if=yicam_night_test_GD25Q128C_conf.bin ) >> yicam_full_e.bin
+(dd if=yicam_night_test_GD25Q128C_os.bin ) >> yicam_full_e.bin
+(dd if=yicam_night_test_GD25Q128C_rootfs_e.bin ) >> yicam_full_e.bin
+(dd if=yicam_night_test_GD25Q128C_home.bin ) >> yicam_full_e.bin
+(dd if=yicam_night_test_GD25Q128C_vd1.bin ) >> yicam_full_e.bin
+(dd if=yicam_night_test_GD25Q128C_ver.bin ) >> yicam_full_e.bin
+```
+
+
