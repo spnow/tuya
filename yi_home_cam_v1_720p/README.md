@@ -274,7 +274,7 @@ ruby -e 'print "\xFF" * 393216' >> rootfs_e.jjfs
 ```
 
 ## Burn the ROM again
-Writing in into the ROM is not a easy task, you will need a complete erase before writing into the ROM. A python script from @klks_84 came to the rescue. Looks for GD25Q128.py in this repo.
+Writing in into the ROM is not a easy task, you will need a complete erase before writing into the ROM. A python script from @klks84 came to the rescue. Looks for GD25Q128.py in this repo.
 
 ## Notes
 We desolder the the GD25Q128 flash rom from the chip and try to mess around with it. After solding the GD25Q128 back onto the board and it seems not to be able to wake up again. 
