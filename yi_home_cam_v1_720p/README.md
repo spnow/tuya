@@ -18,7 +18,7 @@ The worse of all, this cam is not downgradeable and not seems to be able to upgr
 
 So, is this the End? NO, Hacking starts here.
 
-## Gettings the Console
+## Part I: Gettings the Console
 
 Open up the cover, hunt for (soldering skill needed) 
 - RX
@@ -212,10 +212,10 @@ Kernel panic - not syncing: No init found.  Try passing init= option to kernel. 
 ```
 
 
-This is part II,
 
 
-## Taking over the flash room
+
+## Part II, Taking over the flash room
 
 
 
