@@ -1,15 +1,33 @@
-# Road To Hacking Yi Cam Home 720P - Night Vision
+# Road To Hacking Yi Cam Home 720P - Night Vision (17CN)
 
-## Item Needed
+## Check List
 
+1. USB TO RS232 UART SERIAL CONVERTER 
+2. Soldering Station Set
+3. Rainbow Cable
+4. Multi-meter
+5. If you screw everything up (which i did), you will need a Bus Pirate
 
+## Intro
 
+I got this cam from China, first things first. The cam only connect to the China (China version) app. Android is a APK and IOS you need to get from the China Apple App Store.
 
+After sorting out all the mess. The Cam actually TALK!, It says "This cam can only works within China"
 
+The worse of all, this cam is not downgradeable and not seems to be able to upgrade too. Maybe just me.
 
+So, is this the End? NO, Hacking starts here.
 
+## Gettings the Console
 
-### Wi-Fi settings
+Open up the cover, hunt for (soldering skill needed) 
+- RX
+- TX
+- GND
+
+connect to your USB to RS232 converter and you will get a console with root. Not Hard.
+
+## Network settings
 
 > /etc/init.d # cat /home/conf/wpa_supplicant.conf
 ```
@@ -26,6 +44,18 @@ psk="my_PASSWORD_l4h"
 }
 ```
 
+After we manage to setup the Wifi, we need few things for us to get easy access,
+
+1. Telnet
+2. FTP
+3. RTSP
+
+All these 3 deamons needs a busybox, so we google says there is a complete version from XiaoYi busybox (download from this folder) which allow us to to run these 3 deamons. Download, put into SD, mount it and put into the /home
+
+1. Sym link a telnetd in /home/app
+2. Sym link a tcpsvd in /home/app
+
+## Bring up some services
 
 > /etc/init.d # cat S88telnet
 ```
@@ -41,19 +71,33 @@ psk="my_PASSWORD_l4h"
 /home/app/tcpsvd -vE 0.0.0.0 21 ftpd -w / &
 ```
 
+## RTSP returns segmentation fault
 
-
-After some RE (with IDA Pro), 
+Fire up IDA pro and look at the RTSP Binary, we found few files requred before it can run, so this is how we fix it.
 
 ```
 ln -s /tmp/hd1 /home/hd1
 ln -s /tmp/hd2 /home/hd2
-ln -s /tmp mmap_tmpfs
-mkdir jrview
-ln -s busybox renice
+ln -s /tmp /home/mmap_tmpfs
+mkdir /home/jrview
+ln -s /home/app/busybox /bin/renice
 ```
 
+Till this stage, 
 
+- WiFi - Up, Tested
+- telnetd - Up, Tested
+- ftpd - Up, Tested
+- rtsp - Up, yet to test
+
+With not enough coffee consumption I decided to delete the /bin/busybox and and want to copy the full buxybox into /bin/busybox. Wihout checking
+
+- Space in rootfs is way too small
+- without backing up the original busybox
+
+Again I rebooted the box without a proper check. Kernel Panic is the gift.
+
+## The Kernel Panic
 ```
 ## Booting kernel from Legacy Image at 81000000 ...
    Image Name:   7518-hi3518c-kernel
@@ -168,6 +212,15 @@ Kernel panic - not syncing: No init found.  Try passing init= option to kernel. 
 ```
 
 
+This is part II,
+
+
+## Taking over the flash room
+
+
+
+
+## Taking Partition Notes
 
 Partition by size
 ```
@@ -180,6 +233,13 @@ Partition by size
 0x000000fe0000-0x000000ff0000 : "vd1"
 0x000000ff0000-0x000001000000 : "ver"
 ```
+
+
+## Dump using bus pirate
+```
+flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -c GD25Q128C -r yicam_night_GD25Q128C.bin -V -f
+```
+
 
 This is how you split the file according to partition size
 ```
@@ -194,10 +254,7 @@ dd if=yicam_night_test_GD25Q128C.bin of=yicam_night_test_GD25Q128C_ver.bin bs=1 
 ```
 
 
-Dump using bus pirate
-```
-flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -c GD25Q128B -r yicam_night_GD25Q128B.bin -V -f
-flashrom -p buspirate_spi:dev=/dev/ttyUSB0 -c GD25Q128C -r yicam_night_GD25Q128C.bin -V -f
+
 ```
 
 Just In case you need padding before write
