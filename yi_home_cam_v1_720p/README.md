@@ -16,6 +16,8 @@ After sorting out all the mess. The Cam actually TALK!, It says "This cam can on
 
 The worse of all, this cam is not downgradeable and not seems to be able to upgrade too. Maybe just me.
 
+There are tons of tutorial (mostly Russian and Vietnamese) on how to block the cam to goto call home, all their method is not working with this cam. Lots of people compliant too, they are having the same version like I do.
+
 So, is this the End? NO, Hacking starts here.
 
 ## Part I: Gettings the Console
